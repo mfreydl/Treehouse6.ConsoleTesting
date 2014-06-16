@@ -1,0 +1,8 @@
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\bin\Debug\Treehouse6.ConsoleTesting.dll
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\bin\Debug\Treehouse6.ConsoleTesting.pdb
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\obj\Debug\Treehouse6.ConsoleTesting.dll
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\obj\Debug\Treehouse6.ConsoleTesting.pdb
+D:\Workspace\dev\Treehouse6.ConsoleTesting\Treehouse6.ConsoleTesting\bin\Debug\Treehouse6.ConsoleTesting.dll
+D:\Workspace\dev\Treehouse6.ConsoleTesting\Treehouse6.ConsoleTesting\bin\Debug\Treehouse6.ConsoleTesting.pdb
+D:\Workspace\dev\Treehouse6.ConsoleTesting\Treehouse6.ConsoleTesting\obj\Debug\Treehouse6.ConsoleTesting.dll
+D:\Workspace\dev\Treehouse6.ConsoleTesting\Treehouse6.ConsoleTesting\obj\Debug\Treehouse6.ConsoleTesting.pdb

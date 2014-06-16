@@ -1,0 +1,16 @@
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\bin\Debug\ConsoleTestRunner.Example.exe.config
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\bin\Debug\ConsoleTestRunner.Example.exe
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\bin\Debug\ConsoleTestRunner.Example.pdb
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\obj\Debug\ConsoleTestRunner.Example.csprojResolveAssemblyReference.cache
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\obj\Debug\ConsoleTestRunner.Example.exe
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\obj\Debug\ConsoleTestRunner.Example.pdb
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\bin\Debug\Treehouse6.ConsoleTesting.dll
+D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner.Example\bin\Debug\Treehouse6.ConsoleTesting.pdb
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\bin\Debug\ConsoleTestRunner.Example.exe.config
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\obj\Debug\ConsoleTestRunner.Example.exe
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\obj\Debug\ConsoleTestRunner.Example.pdb
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\bin\Debug\ConsoleTestRunner.Example.exe
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\bin\Debug\ConsoleTestRunner.Example.pdb
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\bin\Debug\Treehouse6.ConsoleTesting.dll
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\bin\Debug\Treehouse6.ConsoleTesting.pdb
+D:\Workspace\dev\Treehouse6.ConsoleTesting\ConsoleTestRunner.Example\obj\Debug\ConsoleTestRunner.Example.csprojResolveAssemblyReference.cache
