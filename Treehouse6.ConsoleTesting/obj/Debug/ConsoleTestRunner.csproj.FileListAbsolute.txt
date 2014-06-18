@@ -1,4 +1,0 @@
-D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\bin\Debug\Treehouse6.DevTools.dll
-D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\bin\Debug\Treehouse6.DevTools.pdb
-D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\obj\Debug\Treehouse6.DevTools.dll
-D:\Workspace\dev\ConsoleTestRunner\ConsoleTestRunner\obj\Debug\Treehouse6.DevTools.pdb
