@@ -11,7 +11,7 @@ namespace CalculatorConsoleTest.Example
     {
         static void Main(string[] args)
         {
-            ConsoleTestRunner.RunTests();
+            Treehouse6.ConsoleTesting.ConsoleTestRunner.RunTests();
         }
     }
 }

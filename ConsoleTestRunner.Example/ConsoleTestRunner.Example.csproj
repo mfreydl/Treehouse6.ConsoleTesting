@@ -45,6 +45,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_The_Calculator_Does_Addition.cs" />
+    <Compile Include="When_The_Calculator_Multiplies.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

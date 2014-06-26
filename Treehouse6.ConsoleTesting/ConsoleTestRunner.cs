@@ -18,6 +18,14 @@ namespace Treehouse6.ConsoleTesting
         }
 
         /// <summary>
+        /// Runs the test console for all tests in the assembly containing the given test class.
+        /// </summary>
+        public static void RunTests(Type testClass)
+        {
+            RunTests(testClass.Assembly);
+        }
+
+        /// <summary>
         /// Runs the test console for all tests in the given testSource assembly.
         /// </summary>
         public static void RunTests(Assembly testSource)
