@@ -51,9 +51,9 @@ namespace Treehouse6.ConsoleTesting
 
             WriteHeader();
             Console.Write("Enter the number of a test to run (\"0\" for all, [enter] to exit):");
-            var input = Console.ReadKey().KeyChar;
+            var input = Console.ReadLine();
 
-            while (input != '\r')
+            while (!String.IsNullOrWhiteSpace(input))
             {
                 Console.Clear();
 
@@ -78,7 +78,7 @@ namespace Treehouse6.ConsoleTesting
                 Console.WriteLine();
                 WriteHeader();
                 Console.Write("Enter the number of a test to run (or enter to exit):");
-                input = Console.ReadKey().KeyChar;
+                input = Console.ReadLine();
             }
         }
 
@@ -224,7 +224,7 @@ namespace Treehouse6.ConsoleTesting
         private void WriteHeader()
         {
             Console.WriteLine("///////////////////////////////////////////////////////////////////////////////");
-            Console.WriteLine("/// CONSOLE TESTS:                                                          ///");
+            Console.WriteLine("// CONSOLE TESTS:                                                            //");
 
             string className = null;
             for (var ictr = 0; ictr < _testMethods.Count; ictr++)
@@ -233,18 +233,18 @@ namespace Treehouse6.ConsoleTesting
                 if (className != method.DeclaringType.Name)
                 {
                     className = method.DeclaringType.Name;
-                    Console.WriteLine(String.Format("/// {0}", className).PadRight(76).Substring(0, 76) + "///");
+                    Console.WriteLine(String.Format("// {0}", className).PadRight(77).Substring(0, 77) + "//");
                 }
 
-                Console.Write("/// ");
+                Console.Write("// ");
                 
                 // Highlight the test ordinal in yellow
                 var originalFG = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write((ictr + 1).ToString().PadLeft(2, ' '));
+                Console.Write((ictr + 1).ToString().PadLeft(3, ' '));
                 Console.ForegroundColor = originalFG;
 
-                var restOfLine = String.Format(") {0}", method.Name).PadRight(70).Substring(0, 70) + "///";
+                var restOfLine = String.Format(") {0}", method.Name).PadRight(71).Substring(0, 71) + "//";
                 Console.WriteLine(restOfLine);
             }
 
