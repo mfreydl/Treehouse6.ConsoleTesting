@@ -14,9 +14,18 @@ namespace Treehouse6.ConsoleTesting
         /// </summary>
         public static void RunTests()
         {
-            var runner = new ConsoleTestRunner(Assembly.GetCallingAssembly());
+            RunTests(Assembly.GetCallingAssembly());
+        }
+
+        /// <summary>
+        /// Runs the test console for all tests in the given testSource assembly.
+        /// </summary>
+        public static void RunTests(Assembly testSource)
+        {
+            var runner = new ConsoleTestRunner(testSource);
             runner.Run();
         }
+
 
         private ConsoleTestRunner(Assembly sourceAssembly)
         {
@@ -43,14 +52,11 @@ namespace Treehouse6.ConsoleTesting
                 Int32 ordinal;
                 if (Int32.TryParse(input.ToString(), out ordinal))
                 {
-                    if (ordinal == 0)
+                    if (ordinal == 0)  // Run ALL tests
                     {
-                        foreach (var method in _testMethods)
-                        {
-                            ExecuteTest(method);
-                        }
+                        ExecuteAllTests();
                     }
-                    else if (ordinal <= _testMethods.Count)
+                    else if (ordinal <= _testMethods.Count)  // Run selected test
                     {
                         ExecuteTest(_testMethods[ordinal - 1]);
                     }
@@ -68,14 +74,64 @@ namespace Treehouse6.ConsoleTesting
             }
         }
 
-        private void ExecuteTest(MethodInfo testMethod)
+
+
+        private void ExecuteAllTests()
+        {
+            foreach (var testClass in _testMethods.Select(m => m.DeclaringType).Distinct())
+            {
+                object instance = null;
+                foreach (var method in _testMethods.Where(m => m.DeclaringType == testClass))
+                {
+                    if (instance == null)
+                        instance = ExecuteTest(method);
+                    else
+                        ExecuteTest(method, instance);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Executes the given test method and returns a new instance of the test class that contains it.
+        /// NOTE: This method instantiates the test class and executes the test harness setup method.
+        /// </summary>
+        /// <param name="testMethod"></param>
+        /// <returns></returns>
+        private object ExecuteTest(MethodInfo testMethod)
+        {
+            Console.WriteLine("===============================================================================");
+            Console.WriteLine("Test Class: {0}", testMethod.DeclaringType.Name);
+            var instance = Activator.CreateInstance(testMethod.DeclaringType);
+            ExecuteHarnessSetup(instance);
+            ExecuteTest(testMethod, instance);
+            return instance;
+        }
+
+
+
+        private void ExecuteHarnessSetup(object testClassInstance)
+        {
+            // find the method with attribute: [ConsoleHarnessSetup]
+            var harnessSetupMethod = testClassInstance.GetType().GetMethods()
+                .FirstOrDefault(
+                    m => m.CustomAttributes.Any(a => a.AttributeType == typeof(ConsoleTestHarnessSetupAttribute))
+                );
+            // Execute it
+            if (harnessSetupMethod != null)
+                harnessSetupMethod.Invoke(testClassInstance, null);
+        }
+
+
+
+
+        private void ExecuteTest(MethodInfo testMethod, object testClassInstance)
         {
             Console.WriteLine("-------------------------------------------------------------------------------");
             Console.WriteLine("Test: {0}", testMethod.Name);
-            var instance = Activator.CreateInstance(testMethod.DeclaringType);
             try
             {
-                testMethod.Invoke(instance, null);
+                testMethod.Invoke(testClassInstance, null);
                 WriteSuccess();
             }
             catch (TargetInvocationException ex)  // since we're invoking the test method, our exception is gonna be wrapped up in one of these.
@@ -112,8 +168,17 @@ namespace Treehouse6.ConsoleTesting
                     className = method.DeclaringType.Name;
                     Console.WriteLine(String.Format("/// {0}", className).PadRight(76).Substring(0, 76) + "///");
                 }
-                var testLine = String.Format("/// {0}) {1}", (ictr + 1).ToString().PadLeft(2, ' '), method.Name).PadRight(76).Substring(0, 76) + "///";
-                Console.WriteLine(testLine);
+
+                Console.Write("/// ");
+                
+                // Highlight the test ordinal in yellow
+                var originalFG = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write((ictr + 1).ToString().PadLeft(2, ' '));
+                Console.ForegroundColor = originalFG;
+
+                var restOfLine = String.Format(") {0}", method.Name).PadRight(70).Substring(0, 70) + "///";
+                Console.WriteLine(restOfLine);
             }
 
             Console.WriteLine("///////////////////////////////////////////////////////////////////////////////");

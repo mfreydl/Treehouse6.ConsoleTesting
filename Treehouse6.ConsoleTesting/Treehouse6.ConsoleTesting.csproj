@@ -42,6 +42,7 @@
     <Compile Include="Assert.cs" />
     <Compile Include="AssertionFailureException.cs" />
     <Compile Include="ConsoleTestClassAttribute.cs" />
+    <Compile Include="ConsoleTestHarnessSetupAttribute.cs" />
     <Compile Include="ConsoleTestMethodAttribute.cs" />
     <Compile Include="ConsoleTestRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

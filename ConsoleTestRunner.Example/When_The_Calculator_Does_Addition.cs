@@ -11,13 +11,13 @@ namespace CalculatorConsoleTest.Example
     public class When_The_Calculator_Does_Addition
     {
         public When_The_Calculator_Does_Addition()
-        {
-            HarnessSetup();
-        }
+        { }
 
         private Calc _calc { get; set; }
 
-        private void HarnessSetup()
+
+        [ConsoleTestHarnessSetup]
+        public void HarnessSetup()
         {
             _calc = new Calc();
         }
