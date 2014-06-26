@@ -88,16 +88,90 @@ namespace Treehouse6.ConsoleTesting
         {
             foreach (var testClass in _testMethods.Select(m => m.DeclaringType).Distinct())
             {
-                object instance = null;
-                foreach (var method in _testMethods.Where(m => m.DeclaringType == testClass))
+                object instance;
+                if (TrySetupTestInstance(testClass, out instance))
                 {
-                    if (instance == null)
-                        instance = ExecuteTest(method);
-                    else
+                    foreach (var method in _testMethods.Where(m => m.DeclaringType == testClass))
+                    {
                         ExecuteTest(method, instance);
+                    }
                 }
             }
         }
+
+
+        /// <summary>
+        /// Executes the harness setup method for the given test class (if declared) and returns the test class instance.
+        /// </summary>
+        private bool TrySetupTestInstance(Type testClass, out object instance)
+        {
+            Console.WriteLine("===============================================================================");
+            Console.WriteLine("Test Class: {0}", testClass.Name);
+            
+            bool success = false;
+            instance = null;
+            
+            try
+            {
+                instance = Activator.CreateInstance(testClass);
+            }
+            catch (Exception ex)
+            {
+                WriteFailure(ex);
+                Console.WriteLine("Exception instantiating test class:");
+                Console.WriteLine(ex.ToString());
+            }
+
+            if (instance != null)
+            {
+                try
+                {
+                    ExecuteHarnessSetup(instance);
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    WriteFailure(ex);
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return success;
+        }
+
+
+
+        /// <summary>
+        /// Finds and runs the method designated with a 'ConsoleTestHarnessSetupAttribute'.
+        /// Skips if it does not exist.
+        /// </summary>
+        /// <param name="testClassInstance"></param>
+        private void ExecuteHarnessSetup(object testClassInstance)
+        {
+            // find the method with attribute: [ConsoleHarnessSetup]
+            var harnessSetupMethod = testClassInstance.GetType().GetMethods()
+                .FirstOrDefault(
+                    m => m.CustomAttributes.Any(a => a.AttributeType == typeof(ConsoleTestHarnessSetupAttribute))
+                );
+            // Execute it
+            if (harnessSetupMethod != null)
+            {
+                try
+                {
+                    harnessSetupMethod.Invoke(testClassInstance, null);
+                }
+                catch (TargetInvocationException ex)
+                {
+                    throw new HarnessSetupMethodException("Error executing test harness setup method.", ex.InnerException);
+                }
+                catch (Exception ex)
+                {
+                    throw new HarnessSetupMethodException("Error executing test harness setup method.", ex);
+                }
+            }
+        }
+
+
 
 
         /// <summary>
@@ -108,28 +182,13 @@ namespace Treehouse6.ConsoleTesting
         /// <returns></returns>
         private object ExecuteTest(MethodInfo testMethod)
         {
-            Console.WriteLine("===============================================================================");
-            Console.WriteLine("Test Class: {0}", testMethod.DeclaringType.Name);
-            var instance = Activator.CreateInstance(testMethod.DeclaringType);
-            ExecuteHarnessSetup(instance);
-            ExecuteTest(testMethod, instance);
+            object instance;
+            if (TrySetupTestInstance(testMethod.DeclaringType, out instance))
+            {
+                ExecuteTest(testMethod, instance);
+            }
             return instance;
         }
-
-
-
-        private void ExecuteHarnessSetup(object testClassInstance)
-        {
-            // find the method with attribute: [ConsoleHarnessSetup]
-            var harnessSetupMethod = testClassInstance.GetType().GetMethods()
-                .FirstOrDefault(
-                    m => m.CustomAttributes.Any(a => a.AttributeType == typeof(ConsoleTestHarnessSetupAttribute))
-                );
-            // Execute it
-            if (harnessSetupMethod != null)
-                harnessSetupMethod.Invoke(testClassInstance, null);
-        }
-
 
 
 
