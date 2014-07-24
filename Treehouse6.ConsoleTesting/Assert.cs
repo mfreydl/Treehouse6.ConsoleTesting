@@ -43,7 +43,7 @@ namespace Treehouse6.ConsoleTesting
 
         public static void IsFalse(bool actual, string failureMessage)
         {
-            if (!actual)
+            if (actual)
                 throw new AssertionFailureException(failureMessage) { Actual = actual, Expected = false };
         }
 
