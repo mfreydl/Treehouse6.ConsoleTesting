@@ -45,6 +45,8 @@
     <Compile Include="ConsoleTestHarnessSetupAttribute.cs" />
     <Compile Include="ConsoleTestMethodAttribute.cs" />
     <Compile Include="ConsoleTestRunner.cs" />
+    <Compile Include="ConsoleTestHarnessTeardownAttribute.cs" />
+    <Compile Include="HarnessCleanupMethodException.cs" />
     <Compile Include="HarnessSetupMethodException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

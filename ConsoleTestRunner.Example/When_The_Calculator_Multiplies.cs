@@ -32,6 +32,7 @@ namespace ConsoleTestRunner.Example
             var result = _calc.multiply(a, b);
 
             Assert.AreEqual(15, result, "The product of two integers was incorrect.");
+            Assert.AreEqual(15, result, "The product of {0} and {1} was incorrect.", a, b);
         }
     }
 }

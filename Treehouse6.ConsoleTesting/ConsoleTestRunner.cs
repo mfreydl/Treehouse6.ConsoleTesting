@@ -173,6 +173,62 @@ namespace Treehouse6.ConsoleTesting
 
 
 
+        /// <summary>
+        /// Executes the harness setup method for the given test class (if declared) and returns the test class instance.
+        /// </summary>
+        private bool TryCleanupTestInstance(Type testClass, object instance)
+        {
+            bool success = false;
+            instance = null;
+
+            if (instance != null)
+            {
+                try
+                {
+                    ExecuteHarnessCleanup(instance);
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    WriteFailure(ex);
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return success;
+        }
+
+
+
+
+        private void ExecuteHarnessCleanup(object testClassInstance)
+        {
+            // find the method with attribute: [ConsoleHarnessSetup]
+            var harnessCleanupMethod = testClassInstance.GetType().GetMethods()
+                .FirstOrDefault(
+                    m => m.CustomAttributes.Any(a => a.AttributeType == typeof(ConsoleTestHarnessCleanupAttribute))
+                );
+            // Execute it
+            if (harnessCleanupMethod != null)
+            {
+                try
+                {
+                    Console.WriteLine("Executing Test HarnessCleanup Cleanup: {0}", harnessCleanupMethod.Name);
+                    harnessCleanupMethod.Invoke(testClassInstance, null);
+                }
+                catch (TargetInvocationException ex)
+                {
+                    throw new HarnessCleanupMethodException("Error executing test harness cleanup method.", ex.InnerException);
+                }
+                catch (Exception ex)
+                {
+                    throw new HarnessCleanupMethodException("Error executing test harness cleanup method.", ex);
+                }
+            }
+        }
+
+
+
 
         /// <summary>
         /// Executes the given test method and returns a new instance of the test class that contains it.
@@ -186,6 +242,7 @@ namespace Treehouse6.ConsoleTesting
             if (TrySetupTestInstance(testMethod.DeclaringType, out instance))
             {
                 ExecuteTest(testMethod, instance);
+                TryCleanupTestInstance(testMethod.DeclaringType, instance);
             }
             return instance;
         }
